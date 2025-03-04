@@ -1,0 +1,171 @@
+body{
+    background: #be7e9c;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.btnClick{
+    text-decoration: none;
+}
+
+.botao{
+    background: #bd6990;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #a32c63, 0 0 40px #a32c63, 0 0 80px #a32c63;
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    padding: 0px 18px;
+}
+
+.botao:hover{
+    background: #a32c63;
+}
+
+img{
+    height: 50px;
+    margin-top: 1px;
+    padding-right: 10px;
+    width: 50px;
+}
+
+.botao p{
+    color: #36011a;
+    font-size: 28px;
+    margin-top: 9px;
+}
+
+.fotos{
+    margin: auto;
+    margin-bottom: 50px;
+    overflow: hidden;
+    position: relative;
+    width: 90%;
+}
+
+.carrossel{
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 90%;
+}
+
+.slide{
+    height: 300px;
+    object-fit: cover;
+    width: 100%; /* Cada imagem ocupa 100% da largura do carrossel */
+}
+
+.btn-container{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-container button{
+    align-items: center;
+    background: #bd6990;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #a32c63, 0 0 40px #a32c63, 0 0 80px #a32c63;
+    color: #fff;
+    display: flex;
+    font-size: 22px;
+    height: 50px;
+    justify-content: center;
+    width: 250px;
+}
+
+.btn:hover{
+    background: #a32c63;
+}
+
+.linha{
+    background: #a32c63;
+    height: 2px;
+    margin: 40px -9px;
+    width: 100vw;
+}
+
+/* ENVELOPE */
+.carta-container {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.envelope {
+    align-items: center;
+    background-color: #ff4081;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 360px; /* Largura do envelope */
+    height: 300px; /* Altura do envelope */
+}
+
+.envelope::before, .envelope::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* Altere a cor para transparente, já que estamos usando clip-path */
+    transition: transform 0.5s ease-in-out;
+}
+
+.envelope::before {
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 50% 50%); /* Triângulo superior */
+    background-color: #ff6384; /* Cor do triângulo superior */
+}
+
+.envelope::after {
+    bottom: 0;
+    left: 0;
+}
+
+.carta {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 100%; /* Ajusta a carta para ficar dentro do envelope */
+    width: 275px; /* Largura ajustada para a carta */
+    opacity: 0;
+    padding: 30px;
+    overflow: auto; /* Ativa rolagem quando necessário */
+    font-size: 20px;
+    text-align: center;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.coracao {
+    color: white;
+    font-size: 40px;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 45%;
+}
+
+.envelope.aberto::before {
+    transform: rotateX(180deg);
+}
+
+.envelope.aberto .carta {
+    opacity: 1;
+    transform: translateY(-260px); /* Ajustei para abrir mais */
+}
+
+.envelope.aberto .coracao {
+    display: none;
+}
