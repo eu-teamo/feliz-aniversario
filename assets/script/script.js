@@ -25,61 +25,79 @@ function abrirCarta() {
     document.querySelector('.envelope').classList.toggle('aberto');
 }
 
+// ---------------- CARROSSEL INFINITO ---------------- //
 
-let slideIndex = 0;
-let isTouching = false;
-let startX = 0;
-let endX = 0;
-const slides = document.querySelectorAll('.slide');
-const totalSlides = slides.length;
-
-// Função para mover os slides
-function moveSlide(n) {
-    slideIndex += n;
-
-    if (slideIndex < 0) {
-        slideIndex = totalSlides - 1;  // Volta para o último slide
-    } else if (slideIndex >= totalSlides) {
-        slideIndex = 0;  // Volta para o primeiro slide
-    }
-
-    // Atualiza a posição do carrossel
+document.addEventListener("DOMContentLoaded", function () {
+    let slideIndex = 0;
     const carrossel = document.querySelector('.carrossel');
-    carrossel.style.transform = `translateX(-${slideIndex * 100}%)`;
-}
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let slideWidth = window.innerWidth; // Agora pega a largura da tela corretamente
 
-// Iniciar o carrossel automaticamente a cada 2 segundos
-setInterval(() => moveSlide(1), 2000);
-
-// Funções de toque
-function startTouch(e) {
-    isTouching = true;
-    startX = e.changedTouches[0].screenX;
-}
-
-function moveTouch(e) {
-    if (!isTouching) return;
-    endX = e.changedTouches[0].screenX;
-    if (startX - endX > 50) {
-        moveSlide(1);  // Deslizar para a esquerda (próximo slide)
-        isTouching = false;
-    } else if (endX - startX > 50) {
-        moveSlide(-1); // Deslizar para a direita (slide anterior)
-        isTouching = false;
+    // Define a largura exata do carrossel e dos slides
+    function ajustarLargura() {
+        slideWidth = window.innerWidth; // Atualiza com a largura correta da tela
+        carrossel.style.width = `${totalSlides * slideWidth}px`;
+        slides.forEach(slide => {
+            slide.style.width = `${slideWidth}px`;
+        });
+        carrossel.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
     }
-}
 
-function endTouch() {
-    isTouching = false;
-}
+    ajustarLargura();
+    window.addEventListener('resize', ajustarLargura);
 
-// Adiciona os eventos de toque
-const carrosselContainer = document.querySelector('.fotos');
-carrosselContainer.addEventListener('touchstart', startTouch);
-carrosselContainer.addEventListener('touchmove', moveTouch);
-carrosselContainer.addEventListener('touchend', endTouch);
+    function moveSlide(n) {
+        slideIndex += n;
 
-// Adiciona os eventos de mouse para desktop
-carrosselContainer.addEventListener('mousedown', startTouch);
-carrosselContainer.addEventListener('mousemove', moveTouch);
-carrosselContainer.addEventListener('mouseup', endTouch);
+        if (slideIndex >= totalSlides) {
+            slideIndex = 0;
+        } else if (slideIndex < 0) {
+            slideIndex = totalSlides - 1;
+        }
+
+        carrossel.style.transition = 'transform 0.5s ease-in-out';
+        carrossel.style.transform = `translateX(-${slideIndex * slideWidth}px)`;
+    }
+
+    // Iniciar autoplay
+    let autoSlide = setInterval(() => moveSlide(1), 3000);
+
+    // ---------------- TOQUE / MOUSE PARA MOVER ---------------- //
+
+    let startX = 0;
+    let isTouching = false;
+
+    function startTouch(e) {
+        clearInterval(autoSlide);
+        isTouching = true;
+        startX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    }
+
+    function moveTouch(e) {
+        if (!isTouching) return;
+        let endX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+
+        if (startX - endX > 50) {
+            moveSlide(1);
+            isTouching = false;
+        } else if (endX - startX > 50) {
+            moveSlide(-1);
+            isTouching = false;
+        }
+    }
+
+    function endTouch() {
+        isTouching = false;
+        autoSlide = setInterval(() => moveSlide(1), 3000);
+    }
+
+    // Eventos para toque/mouse
+    const carrosselContainer = document.querySelector('.fotos');
+    carrosselContainer.addEventListener('touchstart', startTouch);
+    carrosselContainer.addEventListener('touchmove', moveTouch);
+    carrosselContainer.addEventListener('touchend', endTouch);
+    carrosselContainer.addEventListener('mousedown', startTouch);
+    carrosselContainer.addEventListener('mousemove', moveTouch);
+    carrosselContainer.addEventListener('mouseup', endTouch);
+});
