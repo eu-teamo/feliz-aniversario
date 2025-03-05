@@ -10,9 +10,10 @@ body{
 }
 
 .container{
-    display: flex;
-    justify-content: center;
     align-items: center;
+    display: flex;
+    height: 90vh;
+    justify-content: center;
 }
 
 .btnClick{
@@ -179,6 +180,14 @@ img{
 
 .envelope.aberto .coracao {
     display: none;
+}
+
+.gif-snoopy{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    justify-content: center;
 }
 
 .gif-snoopy .primeiro img{
