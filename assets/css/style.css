@@ -52,7 +52,8 @@ img{
 }
 
 .fotos {
-    height: 470px;
+    border-radius: 8px;
+    height: 520px;
     margin: auto;
     margin-bottom: 53px;
     overflow: hidden;
