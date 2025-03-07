@@ -1,3 +1,29 @@
+// Função para criar corações voando
+function createHearts() {
+    const heartsContainer = document.querySelector('.hearts-container');
+
+    function createHeart() {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw'; // Posição horizontal aleatória
+        heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // Duração aleatória
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px'; // Tamanho aleatório
+        heartsContainer.appendChild(heart);
+
+        // Remove o coração após a animação terminar
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }
+
+    // Cria um novo coração a cada 300ms
+    setInterval(createHeart, 300);
+}
+
+// Inicia a criação dos corações quando a página carregar
+document.addEventListener('DOMContentLoaded', createHearts);
+
 function contarData(){
     const data = new Date('2024-06-21T18:06:30');
 
