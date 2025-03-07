@@ -61,15 +61,15 @@ img{
 }
 
 .carrossel {
+    border-radius: 8px;
     display: flex;
-    height: 420px;
     transition: transform 0.5s ease-in-out;
     width: 100%;
 }
 
 .slide {
+    border-radius: 8px;
     flex-shrink: 0;
-    height: 420px;
     object-fit: cover;
     width: 100%;
 }
